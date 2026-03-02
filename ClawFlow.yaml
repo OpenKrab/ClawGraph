@@ -1,0 +1,30 @@
+name: claw-graph
+version: 1.0.0
+description: Interactive Knowledge Graph for ClawMemory with natural language queries
+author: OpenKrab
+license: MIT
+
+dependencies:
+  python: ">=3.8"
+  packages:
+    - networkx
+    - pyvis
+    - ollama
+    - chromadb
+    - sqlite3
+
+integrations:
+  - claw-memory
+  - claw-self-improve
+  - claw-receipt
+
+scripts:
+  build: python scripts/build_graph.py
+  query: python scripts/query_graph.py
+  visualize: python scripts/visualize.py
+  improve: python scripts/improve.py
+
+config:
+  graph_db: graph.db
+  vector_db: chroma
+  ollama_model: llama3

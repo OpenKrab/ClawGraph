@@ -1,0 +1,42 @@
+node_types:
+  - project
+  - deadline
+  - client
+  - task
+  - expense
+  - reminder
+
+edge_types:
+  has_deadline:
+    weight: 1.0
+    description: "Project has a deadline"
+  belongs_to_client:
+    weight: 1.0
+    description: "Project belongs to a client"
+  has_task:
+    weight: 0.8
+    description: "Project has tasks"
+  has_expense:
+    weight: 0.9
+    description: "Project or task has expenses"
+  related_to:
+    weight: 0.5
+    description: "Semantic relationship via vector similarity"
+  precedes:
+    weight: 0.7
+    description: "Task or event precedence"
+
+graph_config:
+  default_weight: 1.0
+  vector_similarity_threshold: 0.8
+  max_nodes: 10000
+  max_edges: 50000
+
+database:
+  claw_memory_db: "claw_memory.sqlite"
+  graph_db: "graph.pkl"
+  vector_db: "chroma"
+
+ollama:
+  model: "llama3"
+  host: "http://localhost:11434"
