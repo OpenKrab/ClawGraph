@@ -9,6 +9,7 @@ import networkx as nx
 import yaml
 import os
 from pathlib import Path
+from tui_utils import print_banner, print_section, print_key_value, print_success, print_error
 
 def load_config():
     config_path = Path(__file__).parent.parent / 'config.yaml'
@@ -157,7 +158,12 @@ def main():
     db_path = config['database']['claw_memory_db']
 
     try:
+        print_banner()
+        print_section("Graph Database Connection")
         conn = connect_db(db_path)
+        print_success(f"Connected to {db_path}")
+
+        print_section("Building Graph")
         G = build_graph(conn, config)
         conn.close()
 
@@ -165,11 +171,13 @@ def main():
         graph_path = config['database']['graph_db']
         nx.write_gpickle(G, graph_path)
 
-        print(f"Graph built with {len(G.nodes)} nodes and {len(G.edges)} edges")
-        print(f"Saved to {graph_path}")
+        print_success(f"Graph built successfully")
+        print_key_value("Nodes", str(len(G.nodes)))
+        print_key_value("Edges", str(len(G.edges)))
+        print_key_value("Saved to", graph_path)
 
     except Exception as e:
-        print(f"Error building graph: {e}")
+        print_error(f"Error building graph: {e}")
         return 1
 
     return 0

@@ -33,7 +33,7 @@ graph_config:
   max_edges: 50000
 
 database:
-  claw_memory_db: "claw_memory.sqlite"
+  claw_memory_db: "../ClawMemory/memory/index.sqlite3"
   graph_db: "graph.pkl"
   vector_db: "chroma"
 

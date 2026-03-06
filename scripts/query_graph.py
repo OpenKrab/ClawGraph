@@ -9,6 +9,7 @@ import networkx as nx
 import ollama
 import yaml
 from pathlib import Path
+from tui_utils import print_banner, print_section, print_key_value, print_success, print_error, print_info
 
 def load_config():
     config_path = Path(__file__).parent.parent / 'config.yaml'
@@ -98,18 +99,21 @@ def main():
     query = sys.argv[1]
 
     try:
+        print_banner()
         config = load_config()
         G = load_graph(config)
         prompt_template = load_prompt()
 
+        print_section("Processing Query")
+        print_info(f"Query: {query}")
+        
         result = query_graph(G, query, config, prompt_template)
 
-        print("Query:", query)
-        print("Result:")
+        print_section("Query Result")
         print(format_result(result))
 
     except Exception as e:
-        print(f"Error: {e}")
+        print_error(f"Error: {e}")
         return 1
 
     return 0
